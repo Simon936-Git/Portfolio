@@ -149,7 +149,7 @@ export function Portfolio() {
             <div className="experience__body">
               <p className="eyebrow">Professional experience</p>
               <h3>
-                {internship.role} — {internship.company}
+                {internship.role}, {internship.company}
               </h3>
               <p className="experience__period">{internship.period}</p>
               <p>{internship.summary}</p>

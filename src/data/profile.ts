@@ -3,15 +3,15 @@ export const profile = {
   title: 'Gameplay Programmer',
   photo: `${import.meta.env.BASE_URL}simon.jpg`,
   tagline:
-    'Recently graduated from Futuregames in Malmö — building responsive, fun, and rewarding gameplay in Unity and Unreal.',
-  location: 'Skåne, Sweden (Ängelholm · Malmö–Helsingborg area)',
+    'Recently graduated from Futuregames in Malmö. I build responsive, fun, and rewarding gameplay in Unity and Unreal.',
+  location: 'Skåne, Sweden (Ängelholm, Malmö-Helsingborg area)',
   availability: 'Open to on-site in Skåne and remote roles across Sweden',
   email: 'SimonOlsson9231@gmail.com',
   github: 'https://github.com/Simon936-Git',
   linkedin: 'https://www.linkedin.com/in/simon-olsson-036a93233/',
   resumeUrl: `${import.meta.env.BASE_URL}resume.pdf`,
-  education: 'Game Programmer — Futuregames, Malmö (2023–2025)',
-  languages: 'English (fluent) · Swedish (native)',
+  education: 'Game Programmer, Futuregames Malmö (2023-2025)',
+  languages: 'English (fluent), Swedish (native)',
   skills: ['Unity', 'Unreal Engine', 'C#', 'C++', 'Gameplay scripting', 'Playmaker', 'Mobile', 'Shaders'],
   about: [
     'I’m a recently graduated Gameplay Programmer from Futuregames in Malmö with a passion for creating gameplay that feels responsive, fun, and rewarding to play. I enjoy turning ideas into working game mechanics and collaborating closely with designers and artists to build engaging player experiences.',
@@ -31,7 +31,7 @@ export const profile = {
       'Collaborated with designers on mechanics that support learning outcomes',
     ],
     url: 'https://www.akribian.com/count-on-me',
-    urlLabel: 'Count on Me — Akribian',
+    urlLabel: 'Count on Me at Akribian',
     youtubeId: 'MhOm9ZiTtv8',
   },
 }

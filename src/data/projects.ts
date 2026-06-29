@@ -18,8 +18,8 @@ export const projects: Project[] = [
     id: 'mandragora',
     title: 'Mandragora',
     summary:
-      'Co-op creature daycare sim. Play as twin witches caring for magical pets — dash, throw, and deliver them before they turn into monsters.',
-    role: 'Programmer · team of 12',
+      'Co-op creature daycare sim. Play as twin witches caring for magical pets: dash, throw, and deliver them before they turn into monsters.',
+    role: 'Programmer, team of 12',
     highlights: [
       'Implemented player pickup and carry/throw interactions',
       'Built movement mechanics tuned for fast co-op chasing',
@@ -36,7 +36,7 @@ export const projects: Project[] = [
     title: 'Drain Dash',
     summary:
       'Co-op kayak escape through sewers. Grapple, boost, and communicate to reach the exit while collecting coins along the way.',
-    role: 'Programmer · team of 12',
+    role: 'Programmer, team of 12',
     highlights: [
       'Designed and coded the boost system using ScriptableObjects',
       'Built data-driven gameplay features designers could tune in-editor',
@@ -53,7 +53,7 @@ export const projects: Project[] = [
     title: 'Bloom',
     summary:
       'Fast-paced Unreal action with horde combat, portals, and aggressive enemy waves in a sci-fi industrial setting.',
-    role: 'Programmer · team project',
+    role: 'Programmer, team project',
     highlights: [
       'Implemented player movement and core locomotion feel',
       'Built enemy spawner systems for wave-based combat',

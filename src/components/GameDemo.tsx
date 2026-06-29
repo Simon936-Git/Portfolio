@@ -185,11 +185,11 @@ export function GameDemo() {
       <div className="demo__box">
         <canvas ref={canvasRef} width={480} height={200} tabIndex={0} aria-label="Movement demo" />
         <div className="demo__info">
-          <p>A/D or ←/→ to move · Space to jump</p>
+          <p>A/D or arrow keys to move, Space to jump</p>
           <p className="demo__stats">
-            grounded: {stats.grounded ? 'yes' : 'no'} · vx: {stats.vx} · vy: {stats.vy}
+            grounded: {stats.grounded ? 'yes' : 'no'}, vx: {stats.vx}, vy: {stats.vy}
           </p>
-          <p className="demo__note">Coyote time & jump buffering — patterns I use in engine work.</p>
+          <p className="demo__note">Coyote time and jump buffering, same patterns I use in engine work.</p>
         </div>
       </div>
     </section>
