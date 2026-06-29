@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
+import { useEffect, useRef, type PointerEvent as ReactPointerEvent } from 'react'
 
 type Player = {
   x: number
@@ -68,8 +68,8 @@ function bindHold(
 
 export function GameDemo() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const statsRef = useRef<HTMLParagraphElement>(null)
   const touchRef = useRef<TouchInput>({ left: false, right: false, jump: false })
-  const [stats, setStats] = useState({ grounded: false, vx: 0, vy: 0 })
 
   useEffect(() => {
     const canvas = canvasRef.current
@@ -198,11 +198,9 @@ export function GameDemo() {
       ctx.fillStyle = player.grounded ? '#00d4ff' : '#7c3aed'
       ctx.fillRect(player.x, player.y, player.width, player.height)
 
-      setStats({
-        grounded: player.grounded,
-        vx: Math.round(player.vx),
-        vy: Math.round(player.vy),
-      })
+      if (statsRef.current) {
+        statsRef.current.textContent = `grounded: ${player.grounded ? 'yes' : 'no'}, vx: ${Math.round(player.vx)}, vy: ${Math.round(player.vy)}`
+      }
 
       animationId = requestAnimationFrame(step)
     }
@@ -248,8 +246,8 @@ export function GameDemo() {
         </div>
         <div className="demo__info">
           <p className="demo__controls-note">Keyboard: A/D or arrows to move, Space to jump. On mobile, use the on-screen buttons.</p>
-          <p className="demo__stats">
-            grounded: {stats.grounded ? 'yes' : 'no'}, vx: {stats.vx}, vy: {stats.vy}
+          <p className="demo__stats" ref={statsRef}>
+            grounded: yes, vx: 0, vy: 0
           </p>
           <p className="demo__note">Coyote time and jump buffering, same patterns I use in engine work.</p>
         </div>

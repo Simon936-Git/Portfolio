@@ -142,10 +142,23 @@ export function Portfolio() {
             <h2>Who I am</h2>
           </div>
           <div className="about__grid">
-            <div className="about__text">
-              {profile.about.map((paragraph) => (
-                <AboutParagraph key={paragraph.slice(0, 48)} text={paragraph} />
-              ))}
+            <div className="about__main">
+              <div className="about__text">
+                {profile.about.map((paragraph, index) => (
+                  <AboutParagraph key={index} text={paragraph} />
+                ))}
+              </div>
+              <div className="currently" aria-label="Current status">
+                <p className="eyebrow">Currently</p>
+                <div className="currently__grid">
+                  {profile.currently.map((item) => (
+                    <div key={item.label} className="currently__item">
+                      <span className="currently__marker" aria-hidden />
+                      <span>{item.label}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
             <aside className="resume-card">
               <h3>At a glance</h3>
@@ -178,17 +191,6 @@ export function Portfolio() {
                 </div>
               </dl>
             </aside>
-          </div>
-        </section>
-
-        <section className="currently" aria-label="Current status">
-          <div className="currently__grid">
-            {profile.currently.map((item) => (
-              <div key={item.label} className="currently__item">
-                <span className="currently__marker" aria-hidden />
-                <span>{item.label}</span>
-              </div>
-            ))}
           </div>
         </section>
 

@@ -42,8 +42,9 @@ export const profile = {
     { name: 'C++', level: 3 },
   ] satisfies SkillRating[],
   about: [
-    "I'm a Gameplay Programmer from Sweden who recently graduated from Futuregames.",
-    'I enjoy building responsive gameplay systems, solving technical problems, and collaborating with designers to create engaging player experiences. During my internship at Akribian Edtech AB, I worked on Count on Me, implementing gameplay mechanics and interactive features in Unity, primarily using Playmaker alongside C#.',
+    "I'm a Gameplay Programmer from Sweden who recently graduated from Futuregames in Malmö.",
+    'I enjoy building responsive gameplay systems, solving technical problems, and collaborating with designers to create engaging player experiences. During my studies I worked in Unity and Unreal on team projects covering player movement, pickups, enemy behavior, and core game systems.',
+    'During my internship at Akribian Edtech AB, I worked on Count on Me, implementing gameplay mechanics and interactive features in Unity with Playmaker and C#.',
   ],
   internship: {
     company: 'Akribian Edtech AB',

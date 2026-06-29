@@ -272,20 +272,43 @@ ul {
 
 .about__grid {
   display: grid;
-  grid-template-columns: 1.35fr 0.65fr;
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr);
   gap: 1.25rem;
+  align-items: start;
+}
+
+.about__main {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-width: 0;
 }
 
 .about__text {
-  display: grid;
-  gap: 0.75rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
   color: var(--muted);
   font-size: 0.9rem;
+}
+
+.about__text p {
+  margin: 0;
 }
 
 .about__text em {
   font-style: italic;
   color: var(--text);
+}
+
+.about .currently .eyebrow {
+  margin-bottom: 0.45rem;
+}
+
+.about .currently__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.5rem;
 }
 
 .resume-card {
@@ -354,21 +377,15 @@ ul {
   font-size: 0.7rem;
 }
 
-.currently__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 0.55rem;
-}
-
 .currently__item {
   display: flex;
   align-items: flex-start;
   gap: 0.55rem;
-  padding: 0.65rem 0.85rem;
+  padding: 0.55rem 0.7rem;
   border: 1px solid var(--border);
-  border-radius: var(--radius);
-  background: var(--card);
-  font-size: 0.84rem;
+  border-radius: calc(var(--radius) - 2px);
+  background: rgba(17, 24, 39, 0.65);
+  font-size: 0.8rem;
   color: var(--text);
   line-height: 1.4;
 }
@@ -805,7 +822,7 @@ ul {
     grid-template-columns: 1fr;
   }
 
-  .currently__grid {
+  .about .currently__grid {
     grid-template-columns: 1fr;
   }
 
