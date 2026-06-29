@@ -1,7 +1,24 @@
 import { profile } from '../data/profile'
 import { projects } from '../data/projects'
+import { GameDemo } from './GameDemo'
+
+function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) {
+  return (
+    <div className="video">
+      <iframe
+        src={`https://www.youtube.com/embed/${youtubeId}`}
+        title={`${title} trailer`}
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowFullScreen
+        loading="lazy"
+      />
+    </div>
+  )
+}
 
 export function Portfolio() {
+  const { internship } = profile
+
   return (
     <div className="page">
       <header className="topbar container">
@@ -9,6 +26,9 @@ export function Portfolio() {
           {profile.name}
         </a>
         <nav className="topbar__nav">
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#demo">Demo</a>
           <a href={profile.resumeUrl} target="_blank" rel="noreferrer">
             Resume
           </a>
@@ -35,15 +55,9 @@ export function Portfolio() {
             ))}
           </div>
 
-          <div className="intro__meta">
-            <span>{profile.location}</span>
-            <span>{profile.education}</span>
-            <span>{profile.experience}</span>
-          </div>
-
           <div className="intro__actions">
             <a href={`mailto:${profile.email}`} className="btn btn--primary">
-              {profile.email}
+              Get in touch
             </a>
             <a href={profile.resumeUrl} className="btn btn--ghost" target="_blank" rel="noreferrer">
               Download resume
@@ -51,36 +65,96 @@ export function Portfolio() {
           </div>
         </section>
 
+        <section id="about" className="about">
+          <div className="section-head">
+            <p className="eyebrow">About</p>
+            <h2>Who I am</h2>
+          </div>
+          <div className="about__grid">
+            <div className="about__text">
+              {profile.about.map((paragraph) => (
+                <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+              ))}
+            </div>
+            <aside className="about__aside">
+              <p>
+                <strong>{profile.education}</strong>
+              </p>
+              <p>{profile.location}</p>
+              <p>{profile.languages}</p>
+            </aside>
+          </div>
+        </section>
+
+        <section className="experience">
+          <div className="experience__card">
+            <div>
+              <p className="eyebrow">Professional experience</p>
+              <h3>
+                {internship.role} — {internship.company}
+              </h3>
+              <p className="experience__period">{internship.period}</p>
+              <p>{internship.summary}</p>
+              <ul>
+                {internship.highlights.map((item) => (
+                  <li key={item}>{item}</li>
+                ))}
+              </ul>
+            </div>
+            <a href={internship.url} className="btn btn--ghost" target="_blank" rel="noreferrer">
+              {internship.urlLabel} →
+            </a>
+          </div>
+        </section>
+
         <section id="projects" className="projects">
-          <h2 className="projects__heading">Shipped student projects</h2>
-          <div className="projects__grid">
+          <div className="section-head">
+            <p className="eyebrow">Projects</p>
+            <h2>Shipped games & my gameplay work</h2>
+          </div>
+
+          <div className="projects__list">
             {projects.map((project) => (
-              <article key={project.id} className="project">
-                <img src={project.image} alt={project.title} className="project__img" loading="lazy" />
-                <div className="project__body">
-                  <h3>{project.title}</h3>
-                  <p className="project__summary">{project.summary}</p>
-                  <p className="project__contrib">
-                    <strong>My work:</strong> {project.contribution}
-                  </p>
-                  <div className="project__tags">
+              <article key={project.id} className="project-row">
+                <VideoEmbed youtubeId={project.youtubeId} title={project.title} />
+                <div className="project-row__body">
+                  <div className="project-row__head">
+                    <h3>{project.title}</h3>
+                    <span>{project.role}</span>
+                  </div>
+                  <p>{project.summary}</p>
+                  <ul>
+                    {project.highlights.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ul>
+                  <div className="project-row__tags">
                     {project.tech.map((tag) => (
                       <span key={tag}>{tag}</span>
                     ))}
                   </div>
-                  <a
-                    href={project.demo ?? project.video}
-                    className="project__link"
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {project.linkLabel} →
-                  </a>
+                  {project.demo && (
+                    <a href={project.demo} className="project-row__link" target="_blank" rel="noreferrer">
+                      {project.linkLabel} →
+                    </a>
+                  )}
+                  {!project.demo && (
+                    <a
+                      href={`https://www.youtube.com/watch?v=${project.youtubeId}`}
+                      className="project-row__link"
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {project.linkLabel} →
+                    </a>
+                  )}
                 </div>
               </article>
             ))}
           </div>
         </section>
+
+        <GameDemo />
       </main>
 
       <footer className="footer container">
@@ -94,7 +168,7 @@ export function Portfolio() {
             LinkedIn
           </a>
         </div>
-        <p className="footer__note">{profile.languages} · Available for junior gameplay roles</p>
+        <p className="footer__note">Available for junior gameplay programming roles</p>
       </footer>
     </div>
   )
