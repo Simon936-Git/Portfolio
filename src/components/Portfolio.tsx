@@ -5,8 +5,9 @@ import { GameDemo } from './GameDemo'
 
 const navLinks = [
   { href: '#about', label: 'About' },
-  { href: '#projects', label: 'Projects' },
   { href: '#demo', label: 'Demo' },
+  { href: '#skills', label: 'Skills' },
+  { href: '#projects', label: 'Projects' },
 ]
 
 function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) {
@@ -19,6 +20,21 @@ function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) 
         allowFullScreen
         loading="lazy"
       />
+    </div>
+  )
+}
+
+function SkillBar({ name, level }: { name: string; level: number }) {
+  const pct = (level / 5) * 100
+  return (
+    <div className="skill-bar__row">
+      <div className="skill-bar__label">
+        <span>{name}</span>
+        <span className="skill-bar__level">{level}/5</span>
+      </div>
+      <div className="skill-bar__track" role="meter" aria-label={name} aria-valuenow={level} aria-valuemin={0} aria-valuemax={5}>
+        <div className="skill-bar__fill" style={{ width: `${pct}%` }} />
+      </div>
     </div>
   )
 }
@@ -90,9 +106,9 @@ export function Portfolio() {
             <p className="hero__tagline">{profile.tagline}</p>
 
             <div className="chips">
-              {profile.skills.map((skill) => (
-                <span key={skill} className="chip">
-                  {skill}
+              {profile.focusAreas.map((area) => (
+                <span key={area} className="chip">
+                  {area}
                 </span>
               ))}
             </div>
@@ -123,6 +139,20 @@ export function Portfolio() {
               <h3>At a glance</h3>
               <dl>
                 <div>
+                  <dt>Available</dt>
+                  <dd>{profile.availability}</dd>
+                </div>
+                <div>
+                  <dt>Looking for</dt>
+                  <dd>
+                    <ul className="resume-card__list">
+                      {profile.lookingFor.map((role) => (
+                        <li key={role}>{role}</li>
+                      ))}
+                    </ul>
+                  </dd>
+                </div>
+                <div>
                   <dt>Education</dt>
                   <dd>{profile.education}</dd>
                 </div>
@@ -131,15 +161,36 @@ export function Portfolio() {
                   <dd>{profile.location}</dd>
                 </div>
                 <div>
-                  <dt>Availability</dt>
-                  <dd>{profile.availability}</dd>
-                </div>
-                <div>
                   <dt>Languages</dt>
                   <dd>{profile.languages}</dd>
                 </div>
               </dl>
             </aside>
+          </div>
+        </section>
+
+        <section className="currently" aria-label="Current status">
+          <div className="currently__grid">
+            {profile.currently.map((item) => (
+              <div key={item.label} className="currently__item">
+                <span className="currently__marker" aria-hidden />
+                <span>{item.label}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <GameDemo />
+
+        <section id="skills" className="skills">
+          <div className="section-head">
+            <p className="eyebrow">Skills</p>
+            <h2>Technical strengths</h2>
+          </div>
+          <div className="skills__panel">
+            {profile.skillRatings.map((skill) => (
+              <SkillBar key={skill.name} name={skill.name} level={skill.level} />
+            ))}
           </div>
         </section>
 
@@ -168,7 +219,7 @@ export function Portfolio() {
         <section id="projects" className="projects">
           <div className="section-head">
             <p className="eyebrow">Projects</p>
-            <h2>Shipped games & my gameplay work</h2>
+            <h2>Shipped games and my gameplay work</h2>
           </div>
 
           <div className="projects__list">
@@ -181,6 +232,7 @@ export function Portfolio() {
                     <span>{project.role}</span>
                   </div>
                   <p>{project.summary}</p>
+                  <h4 className="project-row__contrib">My contribution</h4>
                   <ul>
                     {project.highlights.map((item) => (
                       <li key={item}>{item}</li>
@@ -211,24 +263,31 @@ export function Portfolio() {
             ))}
           </div>
         </section>
-
-        <GameDemo />
       </main>
 
-      <footer className="footer container">
-        <div className="footer__links">
-          <a href={`mailto:${profile.email}`}>Email</a>
-          <a href={profile.github} target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-          <a href={profile.linkedin} target="_blank" rel="noreferrer">
-            LinkedIn
-          </a>
-          <a href={profile.resumeUrl} target="_blank" rel="noreferrer">
-            Resume
+      <footer className="footer">
+        <div className="footer__cta container">
+          <h3>Interested in working together?</h3>
+          <p>Let&apos;s talk.</p>
+          <a href={`mailto:${profile.email}`} className="btn btn--primary">
+            Contact me
           </a>
         </div>
-        <p className="footer__note">{profile.availability}</p>
+        <div className="footer__bottom container">
+          <div className="footer__links">
+            <a href={`mailto:${profile.email}`}>Email</a>
+            <a href={profile.github} target="_blank" rel="noreferrer">
+              GitHub
+            </a>
+            <a href={profile.linkedin} target="_blank" rel="noreferrer">
+              LinkedIn
+            </a>
+            <a href={profile.resumeUrl} target="_blank" rel="noreferrer">
+              Resume
+            </a>
+          </div>
+          <p className="footer__note">{profile.availabilityDetail}</p>
+        </div>
       </footer>
     </div>
   )
