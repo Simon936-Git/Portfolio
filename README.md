@@ -1,14 +1,18 @@
-# Simon Olsson — Gameplay Portfolio
+# Gameplay Portfolio
 
-**Live:** https://theniceone346.github.io/Portfolio/
+Personal portfolio site for gameplay programming work.
 
-## GitHub Pages setup
+## Deploy (GitHub Pages)
 
-1. Push to `main` — GitHub Actions builds and deploys automatically.
-2. On GitHub: **Settings → Pages → Build and deployment → Source** → **GitHub Actions**.
-3. Wait for the **Deploy to GitHub Pages** workflow to finish, then hard-refresh (Ctrl+F5).
+Live URL: `https://simon936-git.github.io/Portfolio/`
 
-Do **not** use `main` branch as the source — that serves raw source code and causes a blank page.
+Rename the repo only if you want a different URL path — then update `vite.config.ts` `siteBasePath` to match.
+
+## Privacy notes
+
+- Phone number is not shown on the site (only in the downloadable resume if you include it there).
+- Keep personal details out of commit messages and the README.
+- On GitHub: **Settings → General → uncheck “Keep my email addresses private”** is optional; use your `noreply@users.noreply.github.com` email in commits if you prefer.
 
 ## Local dev
 
@@ -17,10 +21,4 @@ npm install
 npm run dev
 ```
 
-Open http://localhost:5173
-
-## Edit content
-
-- `src/data/profile.ts` — contact & bio
-- `src/data/projects.ts` — projects & links
-- `public/resume.pdf` — resume download
+Edit content in `src/data/profile.ts` and `src/data/projects.ts`.

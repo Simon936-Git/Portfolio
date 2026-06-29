@@ -1,9 +1,10 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
+const siteBasePath = '/Portfolio/'
+
 // https://vite.dev/config/
 export default defineConfig(({ command }) => ({
-  // GitHub project site: username.github.io/Portfolio/
-  base: command === 'serve' ? '/' : '/Portfolio/',
+  base: command === 'serve' ? '/' : siteBasePath,
   plugins: [react()],
 }))

@@ -1,6 +1,13 @@
+import { useEffect, useState } from 'react'
 import { profile } from '../data/profile'
 import { projects } from '../data/projects'
 import { GameDemo } from './GameDemo'
+
+const navLinks = [
+  { href: '#about', label: 'About' },
+  { href: '#projects', label: 'Projects' },
+  { href: '#demo', label: 'Demo' },
+]
 
 function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) {
   return (
@@ -18,50 +25,86 @@ function VideoEmbed({ youtubeId, title }: { youtubeId: string; title: string }) 
 
 export function Portfolio() {
   const { internship } = profile
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? 'hidden' : ''
+    return () => {
+      document.body.style.overflow = ''
+    }
+  }, [menuOpen])
+
+  const closeMenu = () => setMenuOpen(false)
 
   return (
     <div className="page">
-      <header className="topbar container">
-        <a href="#" className="topbar__brand">
+      <header className={`topbar container ${menuOpen ? 'topbar--open' : ''}`}>
+        <a href="#" className="topbar__brand" onClick={closeMenu}>
           {profile.name}
         </a>
-        <nav className="topbar__nav">
-          <a href="#about">About</a>
-          <a href="#projects">Projects</a>
-          <a href="#demo">Demo</a>
-          <a href={profile.resumeUrl} target="_blank" rel="noreferrer">
+
+        <button
+          type="button"
+          className="topbar__toggle"
+          aria-label="Open menu"
+          aria-expanded={menuOpen}
+          onClick={() => setMenuOpen((open) => !open)}
+        >
+          <span />
+          <span />
+          <span />
+        </button>
+
+        <nav className={`topbar__nav ${menuOpen ? 'topbar__nav--open' : ''}`}>
+          {navLinks.map((link) => (
+            <a key={link.href} href={link.href} onClick={closeMenu}>
+              {link.label}
+            </a>
+          ))}
+          <a href={profile.resumeUrl} target="_blank" rel="noreferrer" onClick={closeMenu}>
             Resume
           </a>
-          <a href={`mailto:${profile.email}`} className="btn btn--primary btn--small">
+          <a
+            href={`mailto:${profile.email}`}
+            className="btn btn--primary btn--small"
+            onClick={closeMenu}
+          >
             Contact
           </a>
         </nav>
       </header>
 
       <main className="container main">
-        <section className="intro">
-          <p className="eyebrow">Gameplay Programming Portfolio</p>
-          <h1>
-            {profile.name}
-            <span>{profile.title}</span>
-          </h1>
-          <p className="intro__tagline">{profile.tagline}</p>
-
-          <div className="chips">
-            {profile.skills.map((skill) => (
-              <span key={skill} className="chip">
-                {skill}
-              </span>
-            ))}
+        <section className="hero">
+          <div className="hero__photo-wrap">
+            <img src={profile.photo} alt={profile.name} className="hero__photo" loading="eager" />
+            <div className="hero__photo-glow" aria-hidden />
           </div>
 
-          <div className="intro__actions">
-            <a href={`mailto:${profile.email}`} className="btn btn--primary">
-              Get in touch
-            </a>
-            <a href={profile.resumeUrl} className="btn btn--ghost" target="_blank" rel="noreferrer">
-              Download resume
-            </a>
+          <div className="hero__content">
+            <p className="eyebrow">Gameplay Programming Portfolio</p>
+            <h1>
+              {profile.name}
+              <span>{profile.title}</span>
+            </h1>
+            <p className="hero__tagline">{profile.tagline}</p>
+
+            <div className="chips">
+              {profile.skills.map((skill) => (
+                <span key={skill} className="chip">
+                  {skill}
+                </span>
+              ))}
+            </div>
+
+            <div className="hero__actions">
+              <a href={`mailto:${profile.email}`} className="btn btn--primary">
+                Get in touch
+              </a>
+              <a href={profile.resumeUrl} className="btn btn--ghost" target="_blank" rel="noreferrer">
+                Download resume
+              </a>
+            </div>
           </div>
         </section>
 
@@ -73,22 +116,37 @@ export function Portfolio() {
           <div className="about__grid">
             <div className="about__text">
               {profile.about.map((paragraph) => (
-                <p key={paragraph.slice(0, 40)}>{paragraph}</p>
+                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
               ))}
             </div>
-            <aside className="about__aside">
-              <p>
-                <strong>{profile.education}</strong>
-              </p>
-              <p>{profile.location}</p>
-              <p>{profile.languages}</p>
+            <aside className="resume-card">
+              <h3>At a glance</h3>
+              <dl>
+                <div>
+                  <dt>Education</dt>
+                  <dd>{profile.education}</dd>
+                </div>
+                <div>
+                  <dt>Location</dt>
+                  <dd>{profile.location}</dd>
+                </div>
+                <div>
+                  <dt>Availability</dt>
+                  <dd>{profile.availability}</dd>
+                </div>
+                <div>
+                  <dt>Languages</dt>
+                  <dd>{profile.languages}</dd>
+                </div>
+              </dl>
             </aside>
           </div>
         </section>
 
         <section className="experience">
           <div className="experience__card">
-            <div>
+            <VideoEmbed youtubeId={internship.youtubeId} title="Count on Me" />
+            <div className="experience__body">
               <p className="eyebrow">Professional experience</p>
               <h3>
                 {internship.role} — {internship.company}
@@ -100,10 +158,10 @@ export function Portfolio() {
                   <li key={item}>{item}</li>
                 ))}
               </ul>
+              <a href={internship.url} className="project-row__link" target="_blank" rel="noreferrer">
+                {internship.urlLabel} →
+              </a>
             </div>
-            <a href={internship.url} className="btn btn--ghost" target="_blank" rel="noreferrer">
-              {internship.urlLabel} →
-            </a>
           </div>
         </section>
 
@@ -159,16 +217,18 @@ export function Portfolio() {
 
       <footer className="footer container">
         <div className="footer__links">
-          <a href={`mailto:${profile.email}`}>{profile.email}</a>
-          <a href={`tel:${profile.phone.replace(/\s/g, '')}`}>{profile.phone}</a>
+          <a href={`mailto:${profile.email}`}>Email</a>
           <a href={profile.github} target="_blank" rel="noreferrer">
             GitHub
           </a>
           <a href={profile.linkedin} target="_blank" rel="noreferrer">
             LinkedIn
           </a>
+          <a href={profile.resumeUrl} target="_blank" rel="noreferrer">
+            Resume
+          </a>
         </div>
-        <p className="footer__note">Available for junior gameplay programming roles</p>
+        <p className="footer__note">{profile.availability}</p>
       </footer>
     </div>
   )
