@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, type PointerEvent as ReactPointerEvent } from 'react'
 
 type Player = {
   x: number
@@ -12,6 +12,12 @@ type Player = {
 }
 
 type Platform = { x: number; y: number; w: number; h: number }
+
+type TouchInput = {
+  left: boolean
+  right: boolean
+  jump: boolean
+}
 
 const GRAVITY = 1800
 const MOVE_SPEED = 300
@@ -38,8 +44,31 @@ function intersects(a: Player, b: Platform) {
   )
 }
 
+function bindHold(
+  touchRef: React.MutableRefObject<TouchInput>,
+  direction: 'left' | 'right',
+) {
+  return {
+    onPointerDown: (event: ReactPointerEvent<HTMLButtonElement>) => {
+      event.preventDefault()
+      touchRef.current[direction] = true
+      event.currentTarget.setPointerCapture(event.pointerId)
+    },
+    onPointerUp: (event: ReactPointerEvent<HTMLButtonElement>) => {
+      touchRef.current[direction] = false
+      if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+        event.currentTarget.releasePointerCapture(event.pointerId)
+      }
+    },
+    onPointerCancel: () => {
+      touchRef.current[direction] = false
+    },
+  }
+}
+
 export function GameDemo() {
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const touchRef = useRef<TouchInput>({ left: false, right: false, jump: false })
   const [stats, setStats] = useState({ grounded: false, vx: 0, vy: 0 })
 
   useEffect(() => {
@@ -75,15 +104,26 @@ export function GameDemo() {
     }
     const onKeyUp = (e: KeyboardEvent) => keys.delete(e.code)
 
+    const preventTouchScroll = (e: TouchEvent) => {
+      if (e.target === canvas) e.preventDefault()
+    }
+
     window.addEventListener('keydown', onKeyDown)
     window.addEventListener('keyup', onKeyUp)
+    canvas.addEventListener('touchstart', preventTouchScroll, { passive: false })
 
     const step = (time: number) => {
       const dt = Math.min((time - lastTime) / 1000, 0.033)
       lastTime = time
 
-      const left = keys.has('ArrowLeft') || keys.has('KeyA')
-      const right = keys.has('ArrowRight') || keys.has('KeyD')
+      const touch = touchRef.current
+      const left = keys.has('ArrowLeft') || keys.has('KeyA') || touch.left
+      const right = keys.has('ArrowRight') || keys.has('KeyD') || touch.right
+
+      if (touch.jump) {
+        jumpBufferTimer = JUMP_BUFFER
+        touch.jump = false
+      }
 
       if (left) {
         player.vx = -MOVE_SPEED
@@ -172,9 +212,18 @@ export function GameDemo() {
       cancelAnimationFrame(animationId)
       window.removeEventListener('keydown', onKeyDown)
       window.removeEventListener('keyup', onKeyUp)
+      canvas.removeEventListener('touchstart', preventTouchScroll)
       keys.clear()
+      touchRef.current.left = false
+      touchRef.current.right = false
+      touchRef.current.jump = false
     }
   }, [])
+
+  const queueJump = (event: ReactPointerEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+    touchRef.current.jump = true
+  }
 
   return (
     <section id="demo" className="demo">
@@ -183,9 +232,22 @@ export function GameDemo() {
         <h2>Movement sandbox</h2>
       </div>
       <div className="demo__box">
-        <canvas ref={canvasRef} width={480} height={200} tabIndex={0} aria-label="Movement demo" />
+        <div className="demo__playfield">
+          <canvas ref={canvasRef} width={480} height={200} tabIndex={0} aria-label="Movement demo" />
+          <div className="demo__touch" aria-label="Touch controls">
+            <button type="button" className="demo__touch-btn" aria-label="Move left" {...bindHold(touchRef, 'left')}>
+              ←
+            </button>
+            <button type="button" className="demo__touch-btn demo__touch-btn--jump" aria-label="Jump" onPointerDown={queueJump}>
+              Jump
+            </button>
+            <button type="button" className="demo__touch-btn" aria-label="Move right" {...bindHold(touchRef, 'right')}>
+              →
+            </button>
+          </div>
+        </div>
         <div className="demo__info">
-          <p>A/D or arrow keys to move, Space to jump</p>
+          <p className="demo__controls-note">Keyboard: A/D or arrows to move, Space to jump. On mobile, use the on-screen buttons.</p>
           <p className="demo__stats">
             grounded: {stats.grounded ? 'yes' : 'no'}, vx: {stats.vx}, vy: {stats.vy}
           </p>

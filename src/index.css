@@ -283,6 +283,11 @@ ul {
   font-size: 0.9rem;
 }
 
+.about__text em {
+  font-style: italic;
+  color: var(--text);
+}
+
 .resume-card {
   padding: 1rem;
   border: 1px solid var(--border);
@@ -602,13 +607,56 @@ ul {
   background: var(--card);
 }
 
+.demo__playfield {
+  display: grid;
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 480px;
+}
+
 .demo__box canvas {
   display: block;
   width: 100%;
-  max-width: 480px;
   border-radius: calc(var(--radius) - 4px);
   outline: none;
   cursor: pointer;
+  touch-action: none;
+  user-select: none;
+}
+
+.demo__touch {
+  display: none;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 0.5rem;
+}
+
+.demo__touch-btn {
+  min-height: 48px;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  background: rgba(0, 212, 255, 0.08);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  user-select: none;
+}
+
+.demo__touch-btn--jump {
+  min-width: 5.5rem;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.18), rgba(124, 58, 237, 0.18));
+}
+
+.demo__touch-btn:active {
+  transform: scale(0.98);
+  background: rgba(0, 212, 255, 0.16);
+}
+
+.demo__controls-note {
+  font-size: 0.84rem;
 }
 
 .demo__box canvas:focus {
@@ -765,9 +813,8 @@ ul {
     max-width: none;
   }
 
-  .footer {
-    flex-direction: column;
-    align-items: flex-start;
+  .demo__touch {
+    display: grid;
   }
 
   .footer__bottom {

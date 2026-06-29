@@ -39,6 +39,18 @@ function SkillBar({ name, level }: { name: string; level: number }) {
   )
 }
 
+function AboutParagraph({ text }: { text: string }) {
+  const parts = text.split('Count on Me')
+  if (parts.length === 1) return <p>{text}</p>
+  return (
+    <p>
+      {parts[0]}
+      <em>Count on Me</em>
+      {parts[1]}
+    </p>
+  )
+}
+
 export function Portfolio() {
   const { internship } = profile
   const [menuOpen, setMenuOpen] = useState(false)
@@ -132,7 +144,7 @@ export function Portfolio() {
           <div className="about__grid">
             <div className="about__text">
               {profile.about.map((paragraph) => (
-                <p key={paragraph.slice(0, 48)}>{paragraph}</p>
+                <AboutParagraph key={paragraph.slice(0, 48)} text={paragraph} />
               ))}
             </div>
             <aside className="resume-card">

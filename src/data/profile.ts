@@ -42,10 +42,8 @@ export const profile = {
     { name: 'C++', level: 3 },
   ] satisfies SkillRating[],
   about: [
-    'I’m a recently graduated Gameplay Programmer from Futuregames in Malmö with a passion for creating gameplay that feels responsive, fun, and rewarding to play. I enjoy turning ideas into working game mechanics and collaborating closely with designers and artists to build engaging player experiences.',
-    'During my studies, I worked with both Unity (C#) and Unreal Engine (C++) in several team projects, where I developed gameplay features such as player movement, pickups, boosts, enemy behavior, and game systems. Working in multidisciplinary teams taught me how to communicate ideas, iterate on feedback, and contribute throughout the entire development process.',
-    'I also completed my internship at Akribian Edtech AB, working on the educational game Count on Me. I implemented gameplay mechanics and interactive features in Unity, primarily using Playmaker alongside C#, and collaborated with the development team to create and improve gameplay systems.',
-    'I’m always looking to improve as a programmer and enjoy learning new technologies, solving technical challenges, and building gameplay that creates a great player experience.',
+    "I'm a Gameplay Programmer from Sweden who recently graduated from Futuregames.",
+    'I enjoy building responsive gameplay systems, solving technical problems, and collaborating with designers to create engaging player experiences. During my internship at Akribian Edtech AB, I worked on Count on Me, implementing gameplay mechanics and interactive features in Unity, primarily using Playmaker alongside C#.',
   ],
   internship: {
     company: 'Akribian Edtech AB',
