@@ -2,17 +2,13 @@
 
 **Live:** https://theniceone346.github.io/Portfolio/
 
-## GitHub Pages setup (fix blank/white page)
+## GitHub Pages setup
 
-The site must serve the **built** files, not the source code.
+1. Push to `main` — GitHub Actions builds and deploys automatically.
+2. On GitHub: **Settings → Pages → Build and deployment → Source** → **GitHub Actions**.
+3. Wait for the **Deploy to GitHub Pages** workflow to finish, then hard-refresh (Ctrl+F5).
 
-1. Push to `main` — the Action builds and pushes to the `gh-pages` branch.
-2. On GitHub: **Settings → Pages → Build and deployment → Source**
-3. Choose **Deploy from a branch**
-4. Branch: **`gh-pages`** · Folder: **`/ (root)`**
-5. Save, wait ~1 minute, hard-refresh the site (Ctrl+F5).
-
-If Source is set to `main` branch, the page stays white because browsers cannot run `/src/main.tsx` directly.
+Do **not** use `main` branch as the source — that serves raw source code and causes a blank page.
 
 ## Local dev
 

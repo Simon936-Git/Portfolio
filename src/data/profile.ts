@@ -3,7 +3,7 @@ export const profile = {
   title: 'Junior Gameplay Programmer',
   tagline:
     'Gameplay programmer with a Futuregames degree and shipped team projects in Unity and Unreal.',
-  location: 'Malmö, Sweden · Open to remote & on-site',
+  location: 'Ängelholm, Skåne (Malmö–Helsingborg area) · Open to remote & on-site',
   email: 'SimonOlsson9231@gmail.com',
   phone: '+46 760 467 001',
   github: 'https://github.com/TheNiceOne346',
